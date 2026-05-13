@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>مجموعة الجري القابضة — سجل مهام الخروج الميداني</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --ink:#0f1923;--ink2:#1e2d3d;--blue:#1a4b8c;--blue-mid:#2e6bc4;
+  --blue-light:#d6e4f7;--gold:#b8860b;--gold-light:#f5e6a3;
+  --surface:#f7f9fc;--white:#ffffff;--border:#dde4ee;--muted:#7a8fa6;
+  --red:#c0392b;--green:#1a6b3a;--green-light:#d4edda;
+  --shadow-sm:0 1px 4px rgba(15,25,35,.08);
+  --shadow:0 4px 20px rgba(15,25,35,.10);
+  --shadow-lg:0 12px 48px rgba(15,25,35,.14);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink);min-height:100vh;direction:rtl}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,var(--ink) 0%,var(--ink2) 60%,#1a3a5c 100%);padding:0 32px;position:sticky;top:0;z-index:300;box-shadow:0 2px 20px rgba(0,0,0,.25)}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+.logo-area{display:flex;align-items:center;gap:14px}
+.logo-badge{width:46px;height:46px;background:linear-gradient(135deg,var(--blue-mid),var(--blue));border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Tajawal',sans-serif;font-size:20px;color:#fff;font-weight:900;box-shadow:0 3px 12px rgba(46,107,196,.4);flex-shrink:0}
+.logo-text .org{font-size:11px;color:rgba(255,255,255,.5)}
+.logo-text .dept{font-size:15px;color:#fff;font-weight:700;margin-top:2px}
+.header-actions{display:flex;gap:10px;align-items:center}
+.btn-header{display:flex;align-items:center;gap:7px;padding:8px 16px;border-radius:8px;border:none;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-primary{background:var(--blue-mid);color:#fff}.btn-primary:hover{background:#2558a0;transform:translateY(-1px)}
+.btn-ghost{background:rgba(255,255,255,.08);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.15)}.btn-ghost:hover{background:rgba(255,255,255,.14)}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#d4a017);color:#fff}.btn-gold:hover{transform:translateY(-1px)}
+
+/* TAB NAV */
+.tab-nav{background:var(--white);border-bottom:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.tab-nav-inner{max-width:1200px;margin:0 auto;display:flex;padding:0 32px}
+.tab-btn{padding:14px 22px;border:none;background:none;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.tab-btn.active{color:var(--blue-mid);border-bottom-color:var(--blue-mid)}
+.tab-btn:hover:not(.active){color:var(--ink)}
+.tab-count{background:var(--blue-light);color:var(--blue-mid);font-size:10px;font-weight:800;padding:2px 7px;border-radius:10px}
+
+/* MAIN */
+.main{max-width:1200px;margin:0 auto;padding:28px 32px}
+.tab-panel{display:none}.tab-panel.active{display:block}
+.section-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:22px;flex-wrap:wrap;gap:12px}
+.section-title{font-size:22px;font-weight:800;color:var(--ink)}
+.section-subtitle{font-size:13px;color:var(--muted);margin-top:3px;font-weight:400}
+
+/* CARDS */
+.card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:26px;box-shadow:var(--shadow);margin-bottom:18px}
+.card-title{font-size:13px;font-weight:800;color:var(--blue);letter-spacing:.5px;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-full{grid-column:1/-1}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:13px;font-weight:700;color:var(--ink2)}
+.field input,.field select,.field textarea{padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:14px;color:var(--ink);background:var(--surface);transition:border-color .2s,box-shadow .2s;outline:none;text-align:right;width:100%}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue-mid);box-shadow:0 0 0 3px rgba(46,107,196,.12);background:var(--white)}
+.field textarea{resize:vertical;min-height:88px}
+.field select{cursor:pointer}
+
+/* ENTRY TYPE */
+.entry-types{display:flex;gap:10px}
+.entry-type-btn{flex:1;padding:12px;border:2px solid var(--border);border-radius:10px;background:var(--surface);font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .2s;text-align:center;line-height:1.5}
+.entry-type-btn.selected{border-color:var(--blue-mid);background:var(--blue-light);color:var(--blue);box-shadow:0 2px 8px rgba(46,107,196,.15)}
+.entry-type-btn:hover:not(.selected){border-color:#b0c4de;background:#f0f5fc}
+
+/* BUTTONS */
+.form-actions{display:flex;gap:12px;justify-content:flex-start;margin-top:22px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:9px;border:none;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-blue{background:var(--blue-mid);color:#fff}.btn-blue:hover{background:#2558a0;transform:translateY(-1px);box-shadow:0 4px 14px rgba(46,107,196,.35)}
+.btn-outline{background:none;color:var(--muted);border:1.5px solid var(--border)}.btn-outline:hover{border-color:var(--muted);color:var(--ink)}
+.btn-green{background:var(--green);color:#fff}.btn-green:hover{background:#145830;transform:translateY(-1px)}
+.btn-red-outline{background:none;color:var(--red);border:1.5px solid rgba(192,57,43,.3)}.btn-red-outline:hover{background:rgba(192,57,43,.06)}
+
+/* TABLE */
+.table-wrap{overflow-x:auto}
+.data-table{width:100%;border-collapse:collapse;min-width:860px}
+.data-table th{padding:10px 14px;text-align:right;font-size:12px;font-weight:700;color:var(--muted);background:var(--surface);border-bottom:1px solid var(--border);white-space:nowrap}
+.data-table td{padding:12px 14px;font-size:13px;border-bottom:1px solid #f0f3f8;vertical-align:middle;text-align:right}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:#f8faff}
+.name-cell{font-weight:700;color:var(--ink)}
+.id-cell{color:var(--muted);font-size:12px}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700;white-space:nowrap}
+.badge-pending{background:#fef3cd;color:#856404}
+.badge-approved{background:var(--green-light);color:var(--green)}
+.badge-in{background:#d6e4f7;color:var(--blue)}
+.badge-out{background:#fce8e6;color:var(--red)}
+.badge-both{background:#ede8f7;color:#6a3db8}
+
+/* APPROVE BAR */
+.approve-bar{background:linear-gradient(135deg,#fffbea,#fef3cd);border:1.5px solid #f0c040;border-radius:12px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+.approve-bar .ap-title{font-weight:800;font-size:14px;color:#7a5700}
+.approve-bar .ap-sub{font-size:12px;color:#9a7000;margin-top:3px;font-weight:400}
+.approve-bar .ap-actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn-approve-all{background:var(--green);color:#fff;padding:9px 20px;border-radius:8px;border:none;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;transition:all .2s}
+.btn-approve-all:hover{background:#145830;transform:translateY(-1px);box-shadow:0 4px 12px rgba(26,107,58,.3)}
+
+/* REPORT */
+.report-header{background:linear-gradient(135deg,var(--ink),var(--ink2));color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+.report-header h2{font-size:20px;font-weight:800}
+.rh-sub{font-size:13px;color:rgba(255,255,255,.55);margin-top:4px;font-weight:400}
+.report-stats{display:flex;gap:28px;flex-wrap:wrap}
+.report-stat{text-align:center}
+.rs-val{font-size:28px;font-weight:900;color:#7ab8f0}
+.rs-lbl{font-size:11px;color:rgba(255,255,255,.5);margin-top:2px}
+
+/* PRINT PREVIEW */
+.print-preview{background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+.print-preview-header{background:var(--ink);color:#fff;padding:13px 22px;display:flex;justify-content:space-between;align-items:center}
+.print-preview-header span{font-size:13px;font-weight:600}
+.print-preview-body{padding:22px}
+
+/* HR FORM */
+.hr-form{font-family:'Tajawal',sans-serif;border:1px solid #ccc;background:#fff}
+.hr-form-header{background:#1a4b8c;color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.hr-form-title{font-size:18px;font-weight:800}
+.hr-form-sub{font-size:11px;opacity:.7;margin-top:3px}
+.hr-table{width:100%;border-collapse:collapse;font-size:12px;direction:rtl}
+.hr-table th{background:#e8f0fc;padding:8px 10px;text-align:right;font-size:11px;font-weight:800;color:#1a4b8c;white-space:nowrap;border:1px solid #c8d8f0}
+.hr-table td{padding:9px 10px;border:1px solid #e8edf5;font-size:12px;text-align:right;vertical-align:middle}
+.hr-table tr:nth-child(even) td{background:#f8faff}
+.hr-form-sig{padding:16px 20px;display:grid;grid-template-columns:1fr 1px 1fr 1px 1fr;border-top:2px solid #1a4b8c;margin-top:0;direction:rtl}
+.hr-sig-divider{background:#dde4ee;margin:0 12px}
+.hr-sig-box{padding:8px 12px}
+.hr-sig-label{font-size:11px;color:#666;margin-bottom:8px;font-weight:600}
+.hr-sig-line{border-bottom:1.5px solid #333;margin-bottom:4px;height:30px;display:flex;align-items:flex-end;padding-bottom:4px}
+.hr-sig-val{font-size:16px;color:var(--ink);font-weight:700}
+.hr-footer{padding:10px 20px;background:#f0f5fc;border-top:1px solid #dde4ee;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:11px;color:var(--muted);direction:rtl}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(10,18,28,.55);backdrop-filter:blur(4px);z-index:500;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--white);border-radius:16px;padding:30px;max-width:500px;width:100%;box-shadow:var(--shadow-lg);animation:modalIn .25s ease;direction:rtl}
+@keyframes modalIn{from{transform:scale(.95) translateY(10px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.modal-title{font-size:20px;font-weight:800;margin-bottom:6px}
+.modal-sub{font-size:13px;color:var(--muted);margin-bottom:22px;font-weight:400}
+.sig-preview-box{background:#f8faff;border:1.5px dashed var(--border);border-radius:10px;padding:14px 20px;text-align:center;margin:10px 0 18px;min-height:56px;display:flex;align-items:center;justify-content:center}
+.sig-preview-text{font-size:22px;color:var(--ink);font-weight:700}
+
+/* TOAST */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;border-radius:10px;padding:12px 22px;font-size:14px;font-weight:600;box-shadow:var(--shadow-lg);z-index:9999;transition:transform .35s cubic-bezier(.34,1.56,.64,1);display:flex;align-items:center;gap:9px;white-space:nowrap;font-family:'Tajawal',sans-serif}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.success{border-right:4px solid #27ae60}
+.toast.info{border-right:4px solid var(--blue-mid)}
+.toast.error{border-right:4px solid var(--red)}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:60px 20px;color:var(--muted)}
+.es-icon{font-size:52px;margin-bottom:14px}
+.es-title{font-size:17px;font-weight:700;color:var(--ink2);margin-bottom:6px}
+.es-sub{font-size:13px;font-weight:400}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .main{padding:16px}.header{padding:0 16px}.tab-nav-inner{padding:0 16px;overflow-x:auto}
+  .form-grid{grid-template-columns:1fr}.entry-types{flex-direction:column}
+  .report-stats{gap:16px}.btn-header .lbl{display:none}
+}
+
+/* PRINT */
+@media print{
+  body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .header,.tab-nav,.no-print,.approve-bar{display:none!important}
+  .main{padding:0;max-width:100%}
+  .tab-panel{display:none!important}
+  #panel-report{display:block!important}
+  .card,.print-preview{box-shadow:none!important}
+  .print-preview-header{display:none}
+  .print-preview-body{padding:0}
+  .report-header{border-radius:0}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="logo-area">
+      <div class="logo-badge">ج</div>
+      <div class="logo-text">
+        <div class="org">مجموعة الجري القابضة</div><div class="dept">قسم التسويق — سجل المهام الميدانية</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-header btn-ghost" onclick="switchTab('log')">📋 <span class="lbl">السجل</span></button>
+      <button class="btn-header btn-primary" onclick="switchTab('new')">＋ <span class="lbl">إضافة مهمة</span></button>
+      <button class="btn-header btn-gold" onclick="switchTab('report')">📄 <span class="lbl">تقرير شهري</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- TAB NAV -->
+<div class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" id="tbn-log" onclick="switchTab('log')">📋 سجل المهام <span class="tab-count" id="cnt-log">0</span></button>
+    <button class="tab-btn" id="tbn-new" onclick="switchTab('new')">✏️ إضافة مهمة جديدة</button>
+    <button class="tab-btn" id="tbn-report" onclick="switchTab('report')">📊 التقرير الشهري</button>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ══ LOG ══ -->
+  <div class="tab-panel active" id="panel-log">
+
+    <div class="approve-bar" id="approveBar" style="display:none">
+      <div>
+        <div class="ap-title">⏳ بانتظار موافقة المدير المباشر</div>
+        <div class="ap-sub" id="approveBarSub"></div>
+      </div>
+      <div class="ap-actions">
+        <button class="btn-approve-all" onclick="approveAll()">✅ الموافقة على الكل بضغطة واحدة</button>
+        <button class="btn btn-outline no-print" onclick="openManagerModal()">🖊️ ضبط توقيع المدير</button>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <div>
+        <div class="section-title">سجل مهام الخروج الميداني</div>
+        <div class="section-subtitle">جميع مهام قسم التسويق الخارجية</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <select id="filterMonth" onchange="renderLog()" style="padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:14px;background:var(--white);color:var(--ink);cursor:pointer;direction:rtl">
+          <option value="">كل الأشهر</option>
+        </select>
+        <select id="filterStatus" onchange="renderLog()" style="padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:14px;background:var(--white);color:var(--ink);cursor:pointer;direction:rtl">
+          <option value="">كل الحالات</option>
+          <option value="pending">بانتظار الموافقة</option>
+          <option value="approved">معتمد</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="card" style="padding:0;overflow:hidden">
+      <div class="table-wrap">
+        <table class="data-table" id="logTable">
+          <thead>
+            <tr>
+              <th>#</th><th>اسم الموظف</th><th>التاريخ</th><th>نوع المهمة</th>
+              <th>الموقع / الجهة</th><th>نوع البصمة</th><th>وقت الخروج</th>
+              <th>وقت العودة</th><th>الحالة</th><th style="text-align:center">إجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="logBody"></tbody>
+        </table>
+      </div>
+      <div id="logEmpty" class="empty-state" style="display:none">
+        <div class="es-icon">📋</div>
+        <div class="es-title">لا توجد مهام مسجّلة بعد</div>
+        <div class="es-sub">أضف أول مهمة من خلال تبويب <strong>إضافة مهمة جديدة</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ NEW ENTRY ══ -->
+  <div class="tab-panel" id="panel-new">
+    <div class="section-header">
+      <div>
+        <div class="section-title">إضافة مهمة خروج جديدة</div>
+        <div class="section-subtitle">الموظف يختار اسمه ويُعبئ التفاصيل مرة واحدة فقط</div>
+      </div>
+    </div>
+
+    <!-- بيانات الموظف -->
+    <div class="card">
+      <div class="card-title">👤 بيانات الموظف</div>
+      <div class="form-grid">
+        <div class="field">
+          <label>اسم الموظف</label>
+          <input type="text" id="f-name" placeholder="اكتب اسمك الكامل" oninput="syncSig()"/>
+        </div>
+        <div class="field">
+          <label>الرقم الوظيفي</label>
+          <input type="text" id="f-empid" placeholder="مثال: MKT-001"/>
+        </div>
+        <div class="field">
+          <label>المنصب الوظيفي</label>
+          <input type="text" id="f-position" placeholder="مثال: متخصص تسويق"/>
+        </div>
+        <div class="field">
+          <label>القسم</label>
+          <input type="text" id="f-dept" value="قسم التسويق"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- تفاصيل المهمة -->
+    <div class="card">
+      <div class="card-title">📍 تفاصيل المهمة</div>
+      <div class="form-grid">
+        <div class="field">
+          <label>تاريخ المهمة</label>
+          <input type="date" id="f-date"/>
+        </div>
+        <div class="field">
+          <label>الموقع / الجهة المقصودة</label>
+          <input type="text" id="f-location" placeholder="مثال: مدرسة كامبردج — حولي"/>
+        </div>
+        <div class="field">
+          <label>نوع المهمة</label>
+          <select id="f-mission">
+            <option value="">— اختر نوع المهمة —</option>
+            <option>تصوير وإنتاج محتوى</option>
+            <option>اجتماع خارجي</option>
+            <option>يوم مفتوح أو فعالية</option>
+            <option>زيارة مدرسة أو كلية</option>
+            <option>اجتماع عميل</option>
+            <option>مراجعة جهة حكومية</option>
+            <option>تسليم مواد طباعية</option>
+            <option>تدريب أو ورشة عمل</option>
+            <option>مهمة ميدانية أخرى</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>المدة المتوقعة</label>
+          <select id="f-duration">
+            <option value="">— اختر —</option>
+            <option>أقل من ساعتين</option>
+            <option>٢–٤ ساعات (نصف يوم)</option>
+            <option>يوم كامل</option>
+            <option>أكثر من يوم</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>وقت الخروج</label>
+          <input type="time" id="f-depart"/>
+        </div>
+        <div class="field">
+          <label>وقت العودة المتوقع</label>
+          <input type="time" id="f-return"/>
+        </div>
+        <div class="field form-full">
+          <label>تفاصيل المهمة والأسباب</label>
+          <textarea id="f-reason" placeholder="اكتب وصفاً مختصراً للغرض من المهمة الميدانية..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- نوع البصمة -->
+    <div class="card">
+      <div class="card-title">🕐 نوع بصمة التسوية</div>
+      <div class="entry-types">
+        <button class="entry-type-btn" onclick="pickEntry('in',this)">
+          🟢 بصمة الدخول فقط<br><small style="font-weight:400;font-size:12px;color:var(--muted)">Swipe-in Entry</small>
+        </button>
+        <button class="entry-type-btn" onclick="pickEntry('out',this)">
+          🔴 بصمة الخروج فقط<br><small style="font-weight:400;font-size:12px;color:var(--muted)">Swipe-out Entry</small>
+        </button>
+        <button class="entry-type-btn" onclick="pickEntry('both',this)">
+          🔵 بصمة الدخول والخروج<br><small style="font-weight:400;font-size:12px;color:var(--muted)">Both</small>
+        </button>
+      </div>
+    </div>
+
+    <!-- توقيع الموظف -->
+    <div class="card">
+      <div class="card-title">✍️ توقيع الموظف</div>
+      <div class="form-grid">
+        <div class="field">
+          <label>اكتب اسمك كتوقيع</label>
+          <input type="text" id="f-emp-sig" placeholder="اسمك الكامل"/>
+        </div>
+        <div class="field">
+          <label>تاريخ التوقيع</label>
+          <input type="date" id="f-sig-date"/>
+        </div>
+      </div>
+      <div id="sigLiveWrap" style="display:none;margin-top:14px">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:600">معاينة التوقيع:</div>
+        <div id="sigLiveText" style="border-bottom:2px solid var(--ink);padding-bottom:8px;font-size:20px;font-weight:700;color:var(--ink);max-width:280px"></div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-blue" onclick="submitEntry()">✅ حفظ وإرسال المهمة</button>
+      <button class="btn btn-outline" onclick="clearForm()">🔄 مسح النموذج</button>
+    </div>
+  </div>
+
+  <!-- ══ REPORT ══ -->
+  <div class="tab-panel" id="panel-report">
+    <div class="section-header">
+      <div>
+        <div class="section-title">التقرير الشهري — الموارد البشرية</div>
+        <div class="section-subtitle">جاهز للطباعة والتقديم لقسم الموارد البشرية</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap" class="no-print">
+        <select id="reportMonth" onchange="renderReport()" style="padding:8px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:14px;background:var(--white);color:var(--ink);direction:rtl"></select>
+        <button class="btn btn-outline no-print" onclick="openManagerModal()">🖊️ ضبط توقيع المدير</button>
+        <button class="btn btn-blue no-print" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+      </div>
+    </div>
+
+    <div class="report-header">
+      <div>
+        <h2>كشف تسوية الحضور — مهام خارجية</h2>
+        <div class="rh-sub" id="reportSubTitle">مجموعة الجري القابضة — قسم التسويق</div>
+      </div>
+      <div class="report-stats">
+        <div class="report-stat"><div class="rs-val" id="rStat1">0</div><div class="rs-lbl">إجمالي المهام</div></div>
+        <div class="report-stat"><div class="rs-val" id="rStat2">0</div><div class="rs-lbl">موظفون</div></div>
+        <div class="report-stat"><div class="rs-val" id="rStat3">0</div><div class="rs-lbl">معتمد</div></div>
+      </div>
+    </div>
+
+    <div class="print-preview">
+      <div class="print-preview-header no-print">
+        <span>📄 معاينة الكشف الرسمي — جاهز للطباعة</span>
+        <span id="reportPeriodLabel" style="opacity:.6;font-size:12px"></span>
+      </div>
+      <div class="print-preview-body">
+        <div class="hr-form" id="hrFormOutput">
+          <div class="hr-form-header">
+            <div>
+              <div class="hr-form-title">كشف تسوية الحضور — مهام خارجية ميدانية</div>
+              <div class="hr-form-sub">مجموعة الجري القابضة | HR-2010</div>
+            </div>
+            <div style="text-align:left">
+              <div style="font-size:11px;opacity:.8;font-weight:600">القسم: التسويق</div>
+              <div style="font-size:11px;opacity:.7" id="hrFormMonth"></div>
+            </div>
+          </div>
+          <table class="hr-table" id="hrTable">
+            <thead>
+              <tr>
+                <th>#</th><th>اسم الموظف</th><th>الرقم الوظيفي</th><th>التاريخ</th>
+                <th>الموقع / الجهة</th><th>نوع المهمة</th><th>نوع البصمة</th>
+                <th>وقت الخروج</th><th>وقت العودة</th><th>الأسباب</th>
+                <th>توقيع الموظف</th><th>الحالة</th>
+              </tr>
+            </thead>
+            <tbody id="hrTableBody"></tbody>
+          </table>
+          <div class="hr-form-sig" id="hrSigBlock">
+            <div class="hr-sig-box">
+              <div class="hr-sig-label">توقيع المدير المباشر — Manager's Signature</div>
+              <div class="hr-sig-line"><div class="hr-sig-val" id="mgr-sig-display">—</div></div>
+            </div>
+            <div class="hr-sig-divider"></div>
+            <div class="hr-sig-box">
+              <div class="hr-sig-label">اسم المدير المباشر — Manager's Name</div>
+              <div class="hr-sig-line"><div class="hr-sig-val" id="mgr-name-display">—</div></div>
+            </div>
+            <div class="hr-sig-divider"></div>
+            <div class="hr-sig-box">
+              <div class="hr-sig-label">التاريخ — Date</div>
+              <div class="hr-sig-line"><div class="hr-sig-val" id="mgr-date-display">—</div></div>
+            </div>
+          </div>
+          <div class="hr-footer">
+            <span>للاستخدام من قبل قسم الموارد البشرية — For Personnel Department</span>
+            <span>☐ تم التحقق من البيانات &nbsp;&nbsp; ☐ تم إدخال البيانات في النظام</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- MANAGER MODAL -->
+<div class="modal-overlay" id="managerModal">
+  <div class="modal">
+    <div class="modal-title">ضبط توقيع المدير</div>
+    <div class="modal-sub">أدخل بياناتك مرة واحدة — سيُطبَّق توقيعك تلقائياً على كل التقارير.</div>
+    <div class="field" style="margin-bottom:14px">
+      <label>اسم المدير كاملاً</label>
+      <input type="text" id="modal-mgr-name" placeholder="مثال: عبدالله الجري"/>
+    </div>
+    <div class="field" style="margin-bottom:14px">
+      <label>الرقم الوظيفي</label>
+      <input type="text" id="modal-mgr-id" placeholder="مثال: MGR-001"/>
+    </div>
+    <div class="field" style="margin-bottom:16px">
+      <label>اسمك كتوقيع (يُطبع في الكشف)</label>
+      <input type="text" id="modal-mgr-sig" placeholder="اكتب اسمك كتوقيع"/>
+      <div class="sig-preview-box">
+        <div class="sig-preview-text" id="sigPreview">—</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-start">
+      <button class="btn btn-green" onclick="saveManagerSig()">✅ حفظ التوقيع</button>
+      <button class="btn btn-outline" onclick="closeModal()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let entries     = JSON.parse(localStorage.getItem('jari_duty') || '[]');
+let mgrInfo     = JSON.parse(localStorage.getItem('jari_mgr')  || '{}');
+let selType     = '';
+
+document.addEventListener('DOMContentLoaded', () => {
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('f-date').value     = today;
+  document.getElementById('f-sig-date').value = today;
+
+  document.getElementById('f-emp-sig').addEventListener('input', function() {
+    const w = document.getElementById('sigLiveWrap');
+    const t = document.getElementById('sigLiveText');
+    if (this.value.trim()) { w.style.display='block'; t.textContent=this.value; }
+    else w.style.display='none';
+  });
+  document.getElementById('modal-mgr-sig').addEventListener('input', function() {
+    document.getElementById('sigPreview').textContent = this.value || '—';
+  });
+
+  buildMonthOptions();
+  renderLog();
+  renderReport();
+  updateMgrDisplay();
+});
+
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.getElementById('tbn-'+id).classList.add('active');
+  if (id==='report') renderReport();
+}
+
+function syncSig() {
+  const name = document.getElementById('f-name').value;
+  const sigField = document.getElementById('f-emp-sig');
+  if (!sigField.dataset.manuallyEdited) {
+    sigField.value = name;
+    const w = document.getElementById('sigLiveWrap');
+    const t = document.getElementById('sigLiveText');
+    if (name.trim()) { w.style.display='block'; t.textContent=name; }
+    else w.style.display='none';
+  }
+}
+
+function pickEntry(type, el) {
+  selType = type;
+  document.querySelectorAll('.entry-type-btn').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function submitEntry() {
+  const name    = document.getElementById('f-name').value.trim();
+  const date    = document.getElementById('f-date').value;
+  const loc     = document.getElementById('f-location').value.trim();
+  const mission = document.getElementById('f-mission').value;
+  const depart  = document.getElementById('f-depart').value;
+
+  entries.push({
+    id: Date.now(),
+    name: name || '—', date, loc, mission, depart,
+    empid:      document.getElementById('f-empid').value.trim(),
+    position:   document.getElementById('f-position').value.trim(),
+    duration:   document.getElementById('f-duration').value,
+    returnTime: document.getElementById('f-return').value,
+    reason:     document.getElementById('f-reason').value.trim(),
+    entryType:  selType,
+    empSig:     document.getElementById('f-emp-sig').value.trim() || name,
+    sigDate:    document.getElementById('f-sig-date').value,
+    status:     'pending',
+    approvedBy: '', approvedDate: '',
+    submittedAt: new Date().toISOString(),
+  });
+
+  save(); rebuildMonths(); renderLog(); clearForm();
+  toast('✅ تم حفظ المهمة بنجاح!','success');
+  switchTab('log');
+}
+
+function clearForm() {
+  document.getElementById('f-name').value             = '';
+  document.getElementById('f-empid').value            = '';
+  document.getElementById('f-position').value         = '';
+  document.getElementById('f-location').value         = '';
+  document.getElementById('f-reason').value           = '';
+  document.getElementById('f-emp-sig').value          = '';
+  document.getElementById('f-mission').selectedIndex  = 0;
+  document.getElementById('f-duration').selectedIndex = 0;
+  document.getElementById('f-depart').value           = '';
+  document.getElementById('f-return').value           = '';
+  document.getElementById('sigLiveWrap').style.display = 'none';
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('f-date').value     = today;
+  document.getElementById('f-sig-date').value = today;
+  selType = '';
+  document.querySelectorAll('.entry-type-btn').forEach(b=>b.classList.remove('selected'));
+}
+
+function renderLog() {
+  const fm = document.getElementById('filterMonth').value;
+  const fs = document.getElementById('filterStatus').value;
+  const filtered = entries.filter(e => (!fm || e.date.startsWith(fm)) && (!fs || e.status===fs))
+                          .sort((a,b) => new Date(b.date)-new Date(a.date));
+  const pending  = entries.filter(e => e.status==='pending');
+
+  document.getElementById('cnt-log').textContent = entries.length;
+
+  const bar = document.getElementById('approveBar');
+  if (pending.length) {
+    bar.style.display='flex';
+    document.getElementById('approveBarSub').textContent = `${pending.length} مهمة بانتظار توقيعك`;
+  } else bar.style.display='none';
+
+  const tbody = document.getElementById('logBody');
+  const empty = document.getElementById('logEmpty');
+  const table = document.getElementById('logTable');
+
+  if (!filtered.length) {
+    tbody.innerHTML=''; empty.style.display='block'; table.style.display='none'; return;
+  }
+  table.style.display='table'; empty.style.display='none';
+
+  const EL = {in:'🟢 بصمة دخول', out:'🔴 بصمة خروج', both:'🔵 دخول وخروج'};
+  const EB = {in:'badge-in', out:'badge-out', both:'badge-both'};
+
+  tbody.innerHTML = filtered.map((e,i) => `
+    <tr>
+      <td class="id-cell">${i+1}</td>
+      <td><div class="name-cell">${e.name}</div><div class="id-cell">${e.empid} · ${e.position}</div></td>
+      <td style="white-space:nowrap">${fmt(e.date)}</td>
+      <td style="font-size:12px">${e.mission}</td>
+      <td style="font-size:12px">${e.loc}</td>
+      <td><span class="badge ${EB[e.entryType]||''}">${EL[e.entryType]||'—'}</span></td>
+      <td style="font-size:12px">${e.depart||'—'}</td>
+      <td style="font-size:12px">${e.returnTime||'—'}</td>
+      <td><span class="badge ${e.status==='approved'?'badge-approved':'badge-pending'}">${e.status==='approved'?'✅ معتمد':'⏳ انتظار'}</span></td>
+      <td style="text-align:center">
+        <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+          ${e.status==='pending'
+            ? `<button class="btn btn-green" style="padding:5px 10px;font-size:12px" onclick="approveOne(${e.id})">✅ اعتماد</button>`
+            : `<span style="font-size:11px;color:var(--muted)">${e.approvedBy}</span>`}
+          <button class="btn btn-red-outline" style="padding:5px 8px;font-size:12px" onclick="delEntry(${e.id})">🗑️</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function approveOne(id) {
+  if (!mgrInfo.sig) { openManagerModal(); toast('ℹ️ أدخل توقيع المدير أولاً','info'); return; }
+  const e = entries.find(x=>x.id===id);
+  if (!e) return;
+  e.status='approved'; e.approvedBy=mgrInfo.name||'المدير';
+  e.approvedDate=new Date().toISOString().split('T')[0];
+  save(); renderLog(); toast('✅ تم الاعتماد','success');
+}
+
+function approveAll() {
+  if (!mgrInfo.sig) { openManagerModal(); toast('ℹ️ أدخل توقيع المدير أولاً','info'); return; }
+  const p = entries.filter(e=>e.status==='pending');
+  if (!p.length) { toast('ℹ️ لا توجد مهام بانتظار الاعتماد','info'); return; }
+  p.forEach(e => { e.status='approved'; e.approvedBy=mgrInfo.name||'المدير'; e.approvedDate=new Date().toISOString().split('T')[0]; });
+  save(); renderLog(); toast(`✅ تم اعتماد ${p.length} مهمة بضغطة واحدة!`,'success');
+}
+
+function delEntry(id) {
+  if (!confirm('هل تريد حذف هذه المهمة؟')) return;
+  entries = entries.filter(e=>e.id!==id);
+  save(); rebuildMonths(); renderLog(); toast('🗑️ تم الحذف','info');
+}
+
+function openManagerModal() {
+  document.getElementById('modal-mgr-name').value = mgrInfo.name  || '';
+  document.getElementById('modal-mgr-id').value   = mgrInfo.empid || '';
+  document.getElementById('modal-mgr-sig').value  = mgrInfo.sig   || '';
+  document.getElementById('sigPreview').textContent= mgrInfo.sig  || '—';
+  document.getElementById('managerModal').classList.add('open');
+}
+function closeModal() { document.getElementById('managerModal').classList.remove('open'); }
+function saveManagerSig() {
+  const name = document.getElementById('modal-mgr-name').value.trim();
+  const sig  = document.getElementById('modal-mgr-sig').value.trim();
+  if (!name||!sig) { toast('⚠️ أدخل الاسم والتوقيع','error'); return; }
+  mgrInfo = {name, empid:document.getElementById('modal-mgr-id').value.trim(), sig};
+  localStorage.setItem('jari_mgr', JSON.stringify(mgrInfo));
+  updateMgrDisplay(); closeModal(); toast('✅ تم حفظ التوقيع','success');
+}
+document.getElementById('managerModal').addEventListener('click', e=>{ if(e.target===document.getElementById('managerModal')) closeModal(); });
+
+function updateMgrDisplay() {
+  document.getElementById('mgr-sig-display').textContent  = mgrInfo.sig  || '—';
+  document.getElementById('mgr-name-display').textContent = mgrInfo.name || '—';
+  document.getElementById('mgr-date-display').textContent = fmt(new Date().toISOString().split('T')[0]);
+}
+
+function renderReport() {
+  const month    = document.getElementById('reportMonth')?.value || '';
+  const filtered = entries.filter(e=>!month||e.date.startsWith(month)).sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const uEmps    = new Set(filtered.map(e=>e.empid)).size;
+  const approved = filtered.filter(e=>e.status==='approved').length;
+  document.getElementById('rStat1').textContent = filtered.length;
+  document.getElementById('rStat2').textContent = uEmps;
+  document.getElementById('rStat3').textContent = approved;
+
+  const mLabel = month
+    ? new Date(month+'-01').toLocaleString('ar',{month:'long',year:'numeric'})
+    : 'كل الأشهر';
+  document.getElementById('reportPeriodLabel').textContent = mLabel;
+  document.getElementById('hrFormMonth').textContent       = 'الفترة: ' + mLabel;
+  document.getElementById('reportSubTitle').textContent    = `مجموعة الجري القابضة — قسم التسويق | ${mLabel}`;
+  updateMgrDisplay();
+
+  const EL = {in:'بصمة دخول', out:'بصمة خروج', both:'دخول وخروج'};
+  const tbody = document.getElementById('hrTableBody');
+  if (!filtered.length) {
+    tbody.innerHTML = `<tr><td colspan="12" style="text-align:center;color:var(--muted);padding:28px;font-size:14px">لا توجد مهام لهذه الفترة</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = filtered.map((e,i) => `
+    <tr>
+      <td style="font-weight:700">${i+1}</td>
+      <td><strong>${e.name}</strong></td>
+      <td>${e.empid}</td>
+      <td style="white-space:nowrap">${fmt(e.date)}</td>
+      <td>${e.loc}</td>
+      <td>${e.mission}</td>
+      <td>${EL[e.entryType]||'—'}</td>
+      <td>${e.depart||'—'}</td>
+      <td>${e.returnTime||'—'}</td>
+      <td style="font-size:11px;max-width:110px">${e.reason||'—'}</td>
+      <td style="font-size:14px;font-weight:700">${e.empSig||e.name}</td>
+      <td style="color:${e.status==='approved'?'#1a6b3a':'#856404'};font-weight:800;font-size:12px">${e.status==='approved'?'✅ معتمد':'⏳ انتظار'}</td>
+    </tr>
+  `).join('');
+}
+
+function getMonthsList() {
+  const s = new Set();
+  const n = new Date();
+  s.add(`${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`);
+  entries.forEach(e => { if(e.date){ const d=new Date(e.date); s.add(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`); } });
+  return [...s].sort().reverse().map(v => {
+    const [y,m]=v.split('-');
+    return {value:v, label:new Date(y,m-1,1).toLocaleString('ar',{month:'long',year:'numeric'})};
+  });
+}
+function buildMonthOptions() {
+  const fm=document.getElementById('filterMonth'), rm=document.getElementById('reportMonth');
+  getMonthsList().forEach(m => { fm.add(new Option(m.label,m.value)); rm.add(new Option(m.label,m.value)); });
+  const n=new Date(), cv=`${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`;
+  if([...rm.options].some(o=>o.value===cv)) rm.value=cv;
+}
+function rebuildMonths() {
+  const fm=document.getElementById('filterMonth'), rm=document.getElementById('reportMonth');
+  const fv=fm.value, rv=rm.value;
+  while(fm.options.length>1) fm.remove(1);
+  while(rm.options.length)   rm.remove(0);
+  buildMonthOptions();
+  if(fv) fm.value=fv; if(rv) rm.value=rv;
+}
+
+function save() { localStorage.setItem('jari_duty', JSON.stringify(entries)); }
+function fmt(d) {
+  if(!d) return '—';
+  return new Date(d+'T00:00:00').toLocaleDateString('ar-KW',{day:'2-digit',month:'short',year:'numeric'});
+}
+function toast(msg, type='success') {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className=`toast ${type}`; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3200);
+}
+</script>
+</body>
+</html>
