@@ -346,22 +346,12 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
             <input type="date" id="f-date"/>
           </div>
           <div class="field">
-            <label>وقت الخروج</label>
+            <label>وقت الدخول</label>
             <input type="time" id="f-depart"/>
           </div>
           <div class="field">
-            <label>وقت العودة المتوقع</label>
+            <label>وقت الخروج</label>
             <input type="time" id="f-return"/>
-          </div>
-          <div class="field">
-            <label>المدة المتوقعة</label>
-            <select id="f-duration">
-              <option value="">— اختر —</option>
-              <option>أقل من ساعتين</option>
-              <option>٢–٤ ساعات (نصف يوم)</option>
-              <option>يوم كامل</option>
-              <option>أكثر من يوم</option>
-            </select>
           </div>
           <div class="field form-full">
             <label>الموقع / الجهة المقصودة</label>
@@ -457,7 +447,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
             <thead><tr>
               <th>#</th><th>اسم الموظف</th><th>الرقم</th><th>التاريخ</th>
               <th>الجهة</th><th>سبب المهمة / عدم الحضور</th><th>البصمة</th>
-              <th>خروج</th><th>عودة</th><th>التفاصيل</th><th>التوقيع</th><th>الحالة</th>
+              <th>دخول</th><th>خروج</th><th>التفاصيل</th><th>التوقيع</th><th>الحالة</th>
             </tr></thead>
             <tbody id="hrTableBody"></tbody>
           </table>
@@ -622,7 +612,7 @@ function submitEntry(){
 function clearForm(){
   document.getElementById('f-location').value='';document.getElementById('f-reason').value='';
   document.getElementById('f-emp-sig').value=currentUser?.role==='emp'?currentUser?.name||'':'';
-  document.getElementById('f-mission').selectedIndex=0;document.getElementById('f-duration').selectedIndex=0;
+  document.getElementById('f-mission').selectedIndex=0;
   document.getElementById('f-depart').value='';document.getElementById('f-return').value='';
   document.getElementById('sigLiveWrap').style.display='none';
   const today=new Date().toISOString().split('T')[0];
@@ -661,8 +651,8 @@ function renderLog(){
         <div class="ec-item"><div class="ec-item-label">البصمة</div><div class="ec-item-val"><span class="badge ${EB[e.entryType]||''}">${EL[e.entryType]||'—'}</span></div></div>
         <div class="ec-item"><div class="ec-item-label">الموقع</div><div class="ec-item-val">📍 ${e.loc||'—'}</div></div>
         <div class="ec-item"><div class="ec-item-label">السبب</div><div class="ec-item-val">${e.mission||'—'}</div></div>
-        ${e.depart?'<div class="ec-item"><div class="ec-item-label">وقت الخروج</div><div class="ec-item-val">🕐 '+e.depart+'</div></div>':''}
-        ${e.returnTime?'<div class="ec-item"><div class="ec-item-label">وقت العودة</div><div class="ec-item-val">🔙 '+e.returnTime+'</div></div>':''}
+        ${e.depart?'<div class="ec-item"><div class="ec-item-label">وقت الدخول</div><div class="ec-item-val">🟢 '+e.depart+'</div></div>':''}
+        ${e.returnTime?'<div class="ec-item"><div class="ec-item-label">وقت الخروج</div><div class="ec-item-val">🔴 '+e.returnTime+'</div></div>':''}
       </div>
       ${e.reason?'<div class="ec-reason">💬 '+e.reason+'</div>':''}
       <div class="ec-actions">
