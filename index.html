@@ -434,8 +434,8 @@ body{
       </div>
     </div>
     <div class="header-right">
-      <button class="btn-hdr btn-hdr-ghost no-print" onclick="openManagerModal()">🖊️ <span class="hdr-lbl">المدير</span></button>
-      <button class="btn-hdr btn-hdr-gold no-print" onclick="switchTab('report');window.print()">🖨️</button>
+      <span id="headerUserName" style="font-size:12px;color:rgba(255,255,255,.6);font-weight:600;"></span>
+      <a href="#" onclick="doLogout();return false;" style="padding:7px 14px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.2);border-radius:8px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:5px;">خروج</a>
     </div>
   </div>
 </div>
@@ -672,33 +672,11 @@ body{
   </button>
 </nav>
 
-<!-- ══ MANAGER MODAL ══ -->
-<div class="modal-overlay" id="managerModal">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-title">🖊️ ضبط توقيع المدير</div>
-    <div class="modal-sub">أدخل بياناتك مرة واحدة — يُطبَّق تلقائياً على كل التقارير</div>
-    <div class="field" style="margin-bottom:12px">
-      <label>اسم المدير كاملاً</label>
-      <input type="text" id="modal-mgr-name" placeholder="مثال: عبدالله الجري"/>
-    </div>
-    <div class="field" style="margin-bottom:12px">
-      <label>الرقم الوظيفي</label>
-      <input type="text" id="modal-mgr-id" placeholder="مثال: MGR-001"/>
-    </div>
-    <div class="field" style="margin-bottom:6px">
-      <label>اسمك كتوقيع (يُطبع في الكشف)</label>
-      <input type="text" id="modal-mgr-sig" placeholder="اكتب اسمك كتوقيع"/>
-    </div>
-    <div class="sig-preview-box">
-      <div class="sig-preview-text" id="sigPreview">—</div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-green" onclick="saveManagerSig()" style="width:100%">✅ حفظ التوقيع</button>
-      <button class="btn btn-outline" onclick="closeModal()" style="width:100%">إلغاء</button>
-    </div>
-  </div>
-</div>
+<!-- hidden inputs needed by JS functions -->
+<input type="hidden" id="modal-mgr-name"/>
+<input type="hidden" id="modal-mgr-id"/>
+<input type="hidden" id="modal-mgr-sig"/>
+<input type="hidden" id="sigPreview"/>
 
 <div class="toast" id="toast"></div>
 
@@ -734,7 +712,7 @@ function loginEmp(name) {
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('f-name').value  = name;
   document.getElementById('f-empid').value = EMPLOYEES[name] || '';
-  document.getElementById('f-emp-sig').value = name;
+  document.getElementById('headerUserName').textContent = name;
   buildMonthOptions(); renderLog(); renderReport(); updateMgrDisplay();
 }
 
@@ -746,6 +724,7 @@ function loginMgr() {
   }
   currentUser = { name: 'عبدالله الفضلي', empid: '', role: 'mgr' };
   document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('headerUserName').textContent = 'عبدالله الفضلي';
   buildMonthOptions(); renderLog(); renderReport(); updateMgrDisplay();
 }
 
@@ -755,15 +734,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('f-date').value     = today;
   document.getElementById('f-sig-date').value = today;
 
-  document.getElementById('f-emp-sig').addEventListener('input', function() {
-    const w = document.getElementById('sigLiveWrap');
-    const t = document.getElementById('sigLiveText');
-    if (this.value.trim()) { w.style.display='block'; t.textContent=this.value; }
-    else w.style.display='none';
-  });
-  document.getElementById('modal-mgr-sig').addEventListener('input', function() {
-    document.getElementById('sigPreview').textContent = this.value || '—';
-  });
+
 
   // ── FIX: إضافة touchend للأزرار الثابتة عشان تشتغل على الجوال بدون تأخير
   function addTouch(id, fn) {
@@ -823,10 +794,8 @@ function submitEntry() {
   if (!name) { toast('⚠️ اسم الموظف مفقود', 'error'); return; }
   const date = document.getElementById('f-date').value;
   if (!date) { toast('⚠️ حدد تاريخ المهمة', 'error'); return; }
-  const loc = getLocation();
-  if (!loc) { toast('⚠️ اختر الموقع / الجهة', 'error'); return; }
-  if (!selType) { toast('⚠️ اختر نوع البصمة', 'error'); return; }
 
+  const loc = getLocation();
   const mission = document.getElementById('f-mission').value;
   const depart  = document.getElementById('f-depart').value;
 
@@ -837,8 +806,8 @@ function submitEntry() {
     returnTime: document.getElementById('f-return').value,
     reason:     document.getElementById('f-reason').value.trim(),
     entryType:  selType,
-    empSig:     document.getElementById('f-emp-sig').value.trim() || name,
-    sigDate:    document.getElementById('f-sig-date').value,
+    empSig:     name,
+    sigDate:    new Date().toISOString().split('T')[0],
     status:     'pending',
     approvedBy: '', approvedDate: '',
     submittedAt: new Date().toISOString(),
@@ -851,16 +820,15 @@ function submitEntry() {
 
 // ── CLEAR FORM ──
 function clearForm() {
-  document.getElementById('f-location').value         = '';
-  document.getElementById('f-reason').value           = '';
-  document.getElementById('f-emp-sig').value          = currentUser ? currentUser.name : '';
-  document.getElementById('f-mission').selectedIndex  = 0;
-  document.getElementById('f-depart').value           = '';
-  document.getElementById('f-return').value           = '';
-  document.getElementById('sigLiveWrap').style.display = 'none';
+  document.getElementById('f-location').selectedIndex  = 0;
+  document.getElementById('f-location-other').value    = '';
+  document.getElementById('f-location-other').style.display = 'none';
+  document.getElementById('f-reason').value            = '';
+  document.getElementById('f-mission').selectedIndex   = 0;
+  document.getElementById('f-depart').value            = '';
+  document.getElementById('f-return').value            = '';
   const today = new Date().toISOString().split('T')[0];
-  document.getElementById('f-date').value     = today;
-  document.getElementById('f-sig-date').value = today;
+  document.getElementById('f-date').value = today;
   selType = '';
   document.querySelectorAll('.entry-type-btn').forEach(b => b.classList.remove('selected'));
 }
