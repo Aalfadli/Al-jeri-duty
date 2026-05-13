@@ -681,26 +681,47 @@ body{
 <div class="toast" id="toast"></div>
 
 <script>
-const API = 'https://script.google.com/macros/s/AKfycbxliBvCx31OTTfU1VyTMZWC0Ld3pszL8Ocp9dRtUNBhWbnERcSmwEqmORU6nRhgnanx/exec';
+const API = 'https://script.google.com/macros/s/AKfycbwiDT0wtM5nsVQqxPQRdPDENaJyD8xV6wY1k3HbPrCqbIEi50Lh7jpsrfKOn0njXJk8/exec';
 let entries = [];
 let mgrInfo = JSON.parse(localStorage.getItem('jari_mgr') || '{}');
 let selType = '';
 let currentUser = null;
 let loading = false;
 
-async function loadEntries() {
-  try {
-    const r = await fetch(API);
-    const data = await r.json();
-    entries = data.filter(e => e.id);
-    renderLog();
-    renderReport();
-  } catch(e) { console.error('load error', e); }
+async function apiGet() {
+  return new Promise((resolve, reject) => {
+    const cb = 'cb_' + Date.now();
+    const script = document.createElement('script');
+    window[cb] = (data) => { delete window[cb]; document.body.removeChild(script); resolve(data); };
+    script.onerror = reject;
+    script.src = API + '?callback=' + cb;
+    document.body.appendChild(script);
+  });
 }
 
-async function save() {
-  // no-op: each action calls API directly
+async function apiPost(body) {
+  const r = await fetch(API, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify(body)
+  });
+  return true;
 }
+
+async function loadEntries() {
+  try {
+    const data = await apiGet();
+    entries = Array.isArray(data) ? data.filter(e => e.id) : [];
+    renderLog();
+    renderReport();
+  } catch(e) {
+    console.error('load error', e);
+    toast('❌ تعذر تحميل البيانات', 'error');
+  }
+}
+
+async function save() {}
 
 const EMPLOYEES = {
   'عبدالله الحاج': '5031',
@@ -757,8 +778,8 @@ function loginMgr() {
 // ── INIT ──
 document.addEventListener('DOMContentLoaded', () => {
   const today = new Date().toISOString().split('T')[0];
-  document.getElementById('f-date').value     = today;
-  document.getElementById('f-sig-date').value = today;
+  if(document.getElementById('f-date')) document.getElementById('f-date').value = today;
+  if(document.getElementById('f-sig-date')) document.getElementById('f-sig-date').value = today;
 
 
 
@@ -789,11 +810,7 @@ function switchTab(id) {
 }
 
 // ── EMPLOYEE SELECT ──
-function onNameSelect() {
-  const name = document.getElementById('f-name').value;
-  document.getElementById('f-empid').value = EMPLOYEES[name] || '';
-  syncSig();
-}
+function onNameSelect() { /* no-op - handled by loginEmp */ }
 
 function syncSig() {
   const name = document.getElementById('f-name').value;
@@ -1008,9 +1025,11 @@ function saveManagerSig() {
   localStorage.setItem('jari_mgr', JSON.stringify(mgrInfo));
   updateMgrDisplay(); closeModal(); toast('✅ تم حفظ التوقيع', 'success');
 }
-document.getElementById('managerModal').addEventListener('click', e => {
-  if (e.target === document.getElementById('managerModal')) closeModal();
-});
+if(document.getElementById('managerModal')) {
+  document.getElementById('managerModal').addEventListener('click', e => {
+    if (e.target === document.getElementById('managerModal')) closeModal();
+  });
+}
 
 function updateMgrDisplay() {
   document.getElementById('mgr-sig-display').textContent  = mgrInfo.sig  || '—';
