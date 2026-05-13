@@ -250,25 +250,23 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
   <div style="background:#fff;border-radius:18px;padding:24px;width:100%;max-width:360px;">
 
     <div style="font-size:13px;font-weight:700;color:#1e2d3d;margin-bottom:8px;">اختر اسمك</div>
-    <select id="login-name" onchange="if(this.value){doLoginEmp(this.value)}" style="width:100%;padding:14px;border:2px solid #dde4ee;border-radius:10px;font-family:Tajawal,sans-serif;font-size:16px;color:#0f1923;background:#f0f4fa;direction:rtl;-webkit-appearance:none;appearance:none;display:block;margin-bottom:16px;">
+    <select id="login-name" onchange="handleNameSelect(this.value)" style="width:100%;padding:14px;border:2px solid #dde4ee;border-radius:10px;font-family:Tajawal,sans-serif;font-size:16px;color:#0f1923;background:#f0f4fa;direction:rtl;-webkit-appearance:none;appearance:none;display:block;margin-bottom:16px;">
       <option value="">— اختر اسمك للدخول —</option>
       <option value="عبدالله الحاج">عبدالله الحاج</option>
       <option value="نور أبو علول">نور أبو علول</option>
       <option value="رغد نداف">رغد نداف</option>
       <option value="ابراهيم عوده">ابراهيم عوده</option>
+      <option value="__mgr__">عبدالله الفضلي (مدير)</option>
     </select>
-
-    <div style="display:flex;align-items:center;gap:10px;margin:16px 0;">
-      <div style="flex:1;height:1px;background:#dde4ee;"></div>
-      <span style="font-size:12px;color:#7a8fa6;">أو دخول كمدير</span>
-      <div style="flex:1;height:1px;background:#dde4ee;"></div>
-    </div>
 
     <div id="loginErr" style="display:none;background:#fce8e6;color:#c0392b;border-radius:8px;padding:10px;font-size:13px;font-weight:600;text-align:center;margin-bottom:10px;">كلمة مرور غير صحيحة</div>
 
-    <div style="display:flex;gap:10px;">
-      <input type="password" id="login-pass" placeholder="كلمة مرور المدير" style="flex:1;padding:14px;border:2px solid #dde4ee;border-radius:10px;font-family:Tajawal,sans-serif;font-size:15px;color:#0f1923;background:#f0f4fa;direction:rtl;">
-      <input type="button" value="دخول" onclick="doLogin()" style="padding:14px 20px;background:#b8860b;color:#fff;border:none;border-radius:10px;font-family:Tajawal,sans-serif;font-size:15px;font-weight:800;cursor:pointer;-webkit-appearance:none;appearance:none;white-space:nowrap;">
+    <div id="mgrPassWrap" style="display:none;gap:10px;margin-top:4px;">
+      <div style="font-size:13px;font-weight:700;color:#1e2d3d;margin-bottom:8px;">كلمة مرور المدير</div>
+      <div style="display:flex;gap:10px;">
+        <input type="password" id="login-pass" placeholder="••••••••" style="flex:1;padding:14px;border:2px solid #dde4ee;border-radius:10px;font-family:Tajawal,sans-serif;font-size:15px;color:#0f1923;background:#f0f4fa;direction:rtl;">
+        <input type="button" value="دخول" onclick="doLogin()" style="padding:14px 20px;background:#b8860b;color:#fff;border:none;border-radius:10px;font-family:Tajawal,sans-serif;font-size:15px;font-weight:800;cursor:pointer;-webkit-appearance:none;appearance:none;white-space:nowrap;">
+      </div>
     </div>
 
   </div>
@@ -529,9 +527,15 @@ let currentUser = null;
 
 function toggleMgrLogin(){ /* no longer used */ }
 
-function doLoginEmp(name){
-  currentUser={name,empid:EMPLOYEES[name]||'',role:'emp'};
-  startApp();
+function handleNameSelect(val){
+  document.getElementById('loginErr').style.display='none';
+  if(val==='__mgr__'){
+    document.getElementById('mgrPassWrap').style.display='block';
+  } else if(val){
+    document.getElementById('mgrPassWrap').style.display='none';
+    currentUser={name:val,empid:EMPLOYEES[val]||'',role:'emp'};
+    startApp();
+  }
 }
 
 function doLogin(){
@@ -539,12 +543,12 @@ function doLogin(){
   const err=document.getElementById('loginErr');
   err.style.display='none';
   if(pass!==MGR_PASSWORD){err.style.display='block';return;}
-  currentUser={name:'المدير',empid:'',role:'mgr'};
+  currentUser={name:'عبدالله الفضلي',empid:'',role:'mgr'};
   startApp();
 }
 
 function startApp(){
-  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('loginScreen').style.display='none';
   document.getElementById('app').classList.add('visible');
   const pill=document.getElementById('rolePill');
   if(currentUser.role==='mgr'){
@@ -570,7 +574,7 @@ function startApp(){
 
 function doLogout(){
   currentUser=null;
-  document.getElementById('loginScreen').classList.remove('hidden');
+  document.getElementById('loginScreen').style.display='flex';
   document.getElementById('app').classList.remove('visible');
   document.getElementById('login-name').value='';
   document.getElementById('login-pass').value='';
