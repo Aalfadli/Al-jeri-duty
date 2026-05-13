@@ -23,7 +23,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink);min-height:100vh;direction:rtl;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;}
- 
+
 /* LOGIN */
 .login-screen{position:fixed;inset:0;z-index:1000;background:linear-gradient(160deg,#0f1923 0%,#1a3a5c 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;}
 .login-screen.hidden{display:none}
@@ -51,11 +51,11 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
 .login-btn:active{background:#2558a0}
 .login-err{display:none;margin-top:10px;background:#fce8e6;color:var(--red);border-radius:8px;padding:10px 14px;font-size:13px;font-weight:600;text-align:center;}
 .login-err.show{display:block}
- 
+
 /* APP */
 .app{display:none}
 .app.visible{display:block;padding-bottom:90px}
- 
+
 /* HEADER */
 .header{background:linear-gradient(135deg,#0f1923 0%,#1e2d3d 60%,#1a3a5c 100%);padding:0 20px;position:sticky;top:0;z-index:200;box-shadow:0 2px 20px rgba(0,0,0,.3);}
 .header-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 0;gap:10px;}
@@ -70,7 +70,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
 .btn-hdr{display:flex;align-items:center;gap:5px;padding:7px 12px;border-radius:8px;border:none;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:700;cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none;}
 .btn-hdr-ghost{background:rgba(255,255,255,.09);color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.15)}
 .btn-hdr-gold{background:linear-gradient(135deg,var(--gold),#d4a017);color:#fff}
- 
+
 /* BOTTOM NAV */
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--white);border-top:1px solid var(--border);box-shadow:0 -2px 16px rgba(15,25,35,.08);display:flex;height:var(--bottom-h);}
 .bnav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px 8px;border:none;background:none;font-family:'Tajawal',sans-serif;cursor:pointer;color:var(--muted);-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none;position:relative;z-index:1;}
@@ -80,23 +80,23 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
 .bnav-label{font-size:10px;font-weight:700}
 .bnav-badge{position:absolute;top:6px;right:calc(50% - 18px);background:var(--red);color:#fff;font-size:9px;font-weight:800;padding:1px 5px;border-radius:10px;min-width:16px;text-align:center;display:none;}
 .bnav-badge.show{display:block}
- 
+
 /* MAIN */
 .main{max-width:700px;margin:0 auto;padding:16px}
 .tab-panel{display:none}.tab-panel.active{display:block}
 .page-title{font-size:20px;font-weight:800;color:var(--ink);margin-bottom:4px}
 .page-sub{font-size:13px;color:var(--muted);font-weight:400;margin-bottom:18px}
- 
+
 /* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
 .stat-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 10px;text-align:center;box-shadow:var(--shadow-sm)}
 .stat-val{font-size:26px;font-weight:900;color:var(--blue-mid)}
 .stat-lbl{font-size:10px;color:var(--muted);font-weight:600;margin-top:2px}
- 
+
 /* CARDS */
 .card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:14px}
 .card-title{font-size:12px;font-weight:800;color:var(--blue);letter-spacing:.4px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:7px}
- 
+
 /* FORM */
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .form-full{grid-column:1/-1}
@@ -107,12 +107,12 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
 .field input[readonly]{background:#f0f5fc;color:var(--muted)}
 .field textarea{resize:vertical;min-height:80px}
 .field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a8fa6' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 12px center;padding-left:36px;}
- 
+
 /* ENTRY TYPE */
 .entry-types{display:grid;grid-template-columns:1fr;gap:8px}
 .entry-type-btn{padding:15px 16px;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);font-family:'Tajawal',sans-serif;font-size:15px;font-weight:700;color:var(--muted);cursor:pointer;text-align:right;display:flex;align-items:center;gap:10px;width:100%;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none;}
 .entry-type-btn.selected{border-color:var(--blue-mid);background:var(--blue-light);color:var(--blue)}
- 
+
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 20px;border-radius:var(--radius-sm);border:none;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:700;cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;position:relative;z-index:1;}
 .btn:active{opacity:.85}
@@ -123,16 +123,16 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
 .btn-wa{background:var(--wa);color:#fff}
 .btn-approve-all{background:var(--green);color:#fff;padding:13px;border-radius:var(--radius-sm);border:none;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;touch-action:manipulation;user-select:none;-webkit-user-select:none;width:100%;justify-content:center;position:relative;z-index:1;}
 .form-actions{display:flex;flex-direction:column;gap:10px;margin-top:20px;margin-bottom:20px}
- 
+
 /* APPROVE BAR */
 .approve-bar{background:linear-gradient(135deg,#fffbea,#fef3cd);border:1.5px solid #f0c040;border-radius:var(--radius);padding:16px;margin-bottom:16px}
 .approve-bar .ap-title{font-weight:800;font-size:14px;color:#7a5700;margin-bottom:4px}
 .approve-bar .ap-sub{font-size:12px;color:#9a7000;font-weight:400;margin-bottom:12px}
- 
+
 /* FILTERS */
 .filters-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
 .filters-row select{flex:1;min-width:130px;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'Tajawal',sans-serif;font-size:13px;background:var(--white);color:var(--ink);-webkit-appearance:none;appearance:none}
- 
+
 /* ENTRY CARDS */
 .entry-cards{display:flex;flex-direction:column;gap:10px}
 .entry-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow-sm);border-right:4px solid var(--border)}
@@ -148,7 +148,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
 .ec-reason{font-size:12px;color:var(--muted);background:var(--surface);border-radius:6px;padding:8px 10px;margin-bottom:10px;line-height:1.5}
 .ec-actions{display:flex;gap:8px;flex-wrap:wrap}
 .ec-actions .btn{padding:9px 14px;font-size:13px}
- 
+
 /* BADGE */
 .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap}
 .badge-pending{background:#fef3cd;color:#856404}
@@ -156,13 +156,13 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
 .badge-in{background:#d6e4f7;color:var(--blue)}
 .badge-out{background:#fce8e6;color:var(--red)}
 .badge-both{background:#ede8f7;color:#6a3db8}
- 
+
 /* EMPTY */
 .empty-state{text-align:center;padding:60px 20px;color:var(--muted)}
 .es-icon{font-size:52px;margin-bottom:14px}
 .es-title{font-size:17px;font-weight:700;color:var(--ink2);margin-bottom:6px}
 .es-sub{font-size:13px}
- 
+
 /* REPORT */
 .report-header{background:linear-gradient(135deg,var(--ink),var(--ink2));color:#fff;border-radius:var(--radius);padding:20px;margin-bottom:14px}
 .report-header h2{font-size:17px;font-weight:800;margin-bottom:4px}
@@ -173,7 +173,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
 .rs-lbl{font-size:10px;color:rgba(255,255,255,.5);margin-top:2px}
 .report-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
 .report-actions .btn{flex:1;min-width:130px}
- 
+
 /* HR FORM */
 .hr-form{font-family:'Tajawal',sans-serif;border:1px solid #ccc;background:#fff;margin-top:14px}
 .hr-form-header{background:#1a4b8c;color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
@@ -191,7 +191,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
 .hr-sig-line{border-bottom:1.5px solid #333;margin-bottom:4px;height:28px;display:flex;align-items:flex-end;padding-bottom:4px}
 .hr-sig-val{font-size:15px;color:var(--ink);font-weight:700}
 .hr-footer{padding:8px 16px;background:#f0f5fc;border-top:1px solid #dde4ee;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:10px;color:var(--muted)}
- 
+
 /* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(10,18,28,.6);z-index:500;display:flex;align-items:flex-end;justify-content:center;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s,visibility .25s;}
 .modal-overlay.open{opacity:1;visibility:visible;pointer-events:auto}
@@ -203,19 +203,19 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
 .sig-preview-box{background:#f8faff;border:1.5px dashed var(--border);border-radius:10px;padding:14px;text-align:center;margin:10px 0 16px;min-height:50px;display:flex;align-items:center;justify-content:center}
 .sig-preview-text{font-size:22px;color:var(--ink);font-weight:700}
 .modal-actions{display:flex;flex-direction:column;gap:10px}
- 
+
 /* SIG LIVE */
 .sig-live-wrap{display:none;margin-top:12px;padding:12px 14px;background:#f8faff;border-radius:8px}
 .sig-live-label{font-size:11px;color:var(--muted);margin-bottom:6px;font-weight:600}
 .sig-live-text{border-bottom:2px solid var(--ink);padding-bottom:6px;font-size:20px;font-weight:700;color:var(--ink)}
- 
+
 /* TOAST */
 .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:600;box-shadow:var(--shadow-lg);z-index:9999;display:none;align-items:center;gap:9px;white-space:nowrap;font-family:'Tajawal',sans-serif;max-width:90vw;}
 .toast.show{display:flex}
 .toast.success{border-right:4px solid #27ae60}
 .toast.info{border-right:4px solid var(--blue-mid)}
 .toast.error{border-right:4px solid var(--red)}
- 
+
 /* RESPONSIVE */
 @media(min-width:600px){
   .form-grid{grid-template-columns:1fr 1fr}
@@ -226,7 +226,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
   .main{padding:24px 20px}
 }
 @media(min-width:900px){.main{padding:28px 32px;max-width:860px}}
- 
+
 @media print{
   body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;padding-bottom:0}
   .login-screen,.header,.bottom-nav,.no-print,.approve-bar,.modal-overlay,.toast{display:none!important}
@@ -240,48 +240,40 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
 </style>
 </head>
 <body>
- 
+
 <!-- LOGIN SCREEN - ultra simple for WhatsApp WebView -->
 <div id="loginScreen" style="position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(160deg,#0f1923,#1a3a5c);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;z-index:1000;font-family:Tajawal,sans-serif;direction:rtl;">
   <div style="font-size:32px;background:#2e6bc4;width:70px;height:70px;border-radius:16px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;margin-bottom:14px;">ج</div>
   <div style="font-size:19px;font-weight:800;color:#fff;margin-bottom:6px;">مجموعة الجري القابضة</div>
   <div style="font-size:12px;color:rgba(255,255,255,.5);margin-bottom:30px;text-align:center;">سجل الحضور والانصراف والمهام الميدانية</div>
- 
+
   <div style="background:#fff;border-radius:18px;padding:24px;width:100%;max-width:360px;">
- 
+
     <div style="font-size:13px;font-weight:700;color:#1e2d3d;margin-bottom:8px;">اختر اسمك</div>
-    <select id="login-name" style="width:100%;padding:14px;border:2px solid #dde4ee;border-radius:10px;font-family:Tajawal,sans-serif;font-size:16px;color:#0f1923;background:#f0f4fa;direction:rtl;-webkit-appearance:none;appearance:none;display:block;margin-bottom:16px;">
-      <option value="">— اختر اسمك —</option>
+    <select id="login-name" onchange="if(this.value){doLoginEmp(this.value)}" style="width:100%;padding:14px;border:2px solid #dde4ee;border-radius:10px;font-family:Tajawal,sans-serif;font-size:16px;color:#0f1923;background:#f0f4fa;direction:rtl;-webkit-appearance:none;appearance:none;display:block;margin-bottom:16px;">
+      <option value="">— اختر اسمك للدخول —</option>
       <option value="عبدالله الحاج">عبدالله الحاج</option>
       <option value="نور أبو علول">نور أبو علول</option>
       <option value="رغد نداف">رغد نداف</option>
       <option value="ابراهيم عوده">ابراهيم عوده</option>
     </select>
- 
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+
+    <div style="display:flex;align-items:center;gap:10px;margin:16px 0;">
       <div style="flex:1;height:1px;background:#dde4ee;"></div>
-      <span style="font-size:12px;color:#7a8fa6;">أو</span>
+      <span style="font-size:12px;color:#7a8fa6;">أو دخول كمدير</span>
       <div style="flex:1;height:1px;background:#dde4ee;"></div>
     </div>
- 
-    <label style="display:flex;align-items:center;gap:10px;margin-bottom:14px;cursor:pointer;">
-      <input type="checkbox" id="isMgrCheck" onchange="toggleMgrLogin()" style="width:20px;height:20px;accent-color:#2e6bc4;">
-      <span style="font-size:14px;font-weight:700;color:#1e2d3d;">دخول كمدير</span>
-    </label>
- 
-    <div id="mgrPassWrap" style="display:none;margin-bottom:14px;">
-      <div style="font-size:13px;font-weight:700;color:#1e2d3d;margin-bottom:8px;">كلمة مرور المدير</div>
-      <input type="password" id="login-pass" placeholder="••••••••" style="width:100%;padding:14px;border:2px solid #dde4ee;border-radius:10px;font-family:Tajawal,sans-serif;font-size:16px;color:#0f1923;background:#f0f4fa;direction:rtl;display:block;">
+
+    <div id="loginErr" style="display:none;background:#fce8e6;color:#c0392b;border-radius:8px;padding:10px;font-size:13px;font-weight:600;text-align:center;margin-bottom:10px;">كلمة مرور غير صحيحة</div>
+
+    <div style="display:flex;gap:10px;">
+      <input type="password" id="login-pass" placeholder="كلمة مرور المدير" style="flex:1;padding:14px;border:2px solid #dde4ee;border-radius:10px;font-family:Tajawal,sans-serif;font-size:15px;color:#0f1923;background:#f0f4fa;direction:rtl;">
+      <input type="button" value="دخول" onclick="doLogin()" style="padding:14px 20px;background:#b8860b;color:#fff;border:none;border-radius:10px;font-family:Tajawal,sans-serif;font-size:15px;font-weight:800;cursor:pointer;-webkit-appearance:none;appearance:none;white-space:nowrap;">
     </div>
- 
-    <div id="loginErr" style="display:none;background:#fce8e6;color:#c0392b;border-radius:8px;padding:10px;font-size:13px;font-weight:600;text-align:center;margin-bottom:10px;">اسم أو كلمة مرور غير صحيحة</div>
- 
-    <!-- الزر - بسيط جداً بدون أي CSS class -->
-    <input type="button" value="دخول ←" onclick="doLogin()" style="width:100%;padding:18px;background:#2e6bc4;color:#fff;border:none;border-radius:10px;font-family:Tajawal,sans-serif;font-size:17px;font-weight:800;cursor:pointer;display:block;-webkit-appearance:none;appearance:none;">
- 
+
   </div>
 </div>
- 
+
 <!-- APP -->
 <div class="app" id="app">
   <div class="header">
@@ -300,9 +292,9 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
       </div>
     </div>
   </div>
- 
+
   <div class="main">
- 
+
     <!-- LOG -->
     <div class="tab-panel active" id="panel-log">
       <div class="stats-row">
@@ -330,7 +322,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
         <div class="es-sub">اضغط <strong>+ مهمة</strong> أدناه للبدء</div>
       </div>
     </div>
- 
+
     <!-- NEW ENTRY -->
     <div class="tab-panel" id="panel-new">
       <div class="page-title">إضافة مهمة / غياب</div>
@@ -430,7 +422,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
         <button class="btn btn-outline" onclick="clearForm()" style="width:100%">🔄 مسح النموذج</button>
       </div>
     </div>
- 
+
     <!-- REPORT (manager only) -->
     <div class="tab-panel" id="panel-report">
       <div class="page-title">التقرير الشهري</div>
@@ -485,9 +477,9 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
         </div>
       </div>
     </div>
- 
+
   </div>
- 
+
   <nav class="bottom-nav">
     <button class="bnav-btn active" id="bnav-log" ontouchstart="" ontouchend="switchTab('log')" onclick="switchTab('log')">
       <span class="bnav-badge" id="bnav-badge"></span>
@@ -502,7 +494,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
     </button>
   </nav>
 </div>
- 
+
 <!-- MANAGER MODAL -->
 <div class="modal-overlay" id="managerModal">
   <div class="modal">
@@ -524,9 +516,9 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
     </div>
   </div>
 </div>
- 
+
 <div class="toast" id="toast"></div>
- 
+
 <script>
 const MGR_PASSWORD = '1234';
 const EMPLOYEES = {'عبدالله الحاج':'5031','نور أبو علول':'5030','رغد نداف':'5075','ابراهيم عوده':'5082'};
@@ -534,26 +526,24 @@ let entries = JSON.parse(localStorage.getItem('jari_duty')||'[]');
 let mgrInfo = JSON.parse(localStorage.getItem('jari_mgr')||'{}');
 let selType = '';
 let currentUser = null;
- 
-function toggleMgrLogin(){
-  const isMgr=document.getElementById('isMgrCheck').checked;
-  document.getElementById('mgrPassWrap').style.display=isMgr?'block':'none';
-  document.getElementById('login-name').style.display=isMgr?'none':'block';
-  document.getElementById('loginErr').classList.remove('show');
+
+function toggleMgrLogin(){ /* no longer used */ }
+
+function doLoginEmp(name){
+  currentUser={name,empid:EMPLOYEES[name]||'',role:'emp'};
+  startApp();
 }
- 
+
 function doLogin(){
-  const isMgr=document.getElementById('isMgrCheck').checked;
-  document.getElementById('loginErr').classList.remove('show');
-  if(isMgr){
-    const pass=document.getElementById('login-pass').value;
-    if(pass!==MGR_PASSWORD){document.getElementById('loginErr').classList.add('show');return;}
-    currentUser={name:'المدير',empid:'',role:'mgr'};
-  } else {
-    const name=document.getElementById('login-name').value;
-    if(!name){document.getElementById('loginErr').textContent='اختر اسمك أولاً';document.getElementById('loginErr').classList.add('show');return;}
-    currentUser={name,empid:EMPLOYEES[name]||'',role:'emp'};
-  }
+  const pass=document.getElementById('login-pass').value;
+  const err=document.getElementById('loginErr');
+  err.style.display='none';
+  if(pass!==MGR_PASSWORD){err.style.display='block';return;}
+  currentUser={name:'المدير',empid:'',role:'mgr'};
+  startApp();
+}
+
+function startApp(){
   document.getElementById('loginScreen').classList.add('hidden');
   document.getElementById('app').classList.add('visible');
   const pill=document.getElementById('rolePill');
@@ -577,19 +567,16 @@ function doLogin(){
   document.getElementById('f-sig-date').value=today;
   buildMonthOptions();renderLog();renderReport();updateMgrDisplay();
 }
- 
+
 function doLogout(){
   currentUser=null;
   document.getElementById('loginScreen').classList.remove('hidden');
   document.getElementById('app').classList.remove('visible');
   document.getElementById('login-name').value='';
   document.getElementById('login-pass').value='';
-  document.getElementById('isMgrCheck').checked=false;
-  document.getElementById('mgrPassWrap').style.display='none';
-  document.getElementById('login-name').style.display='block';
   switchTab('log');
 }
- 
+
 document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('f-emp-sig').addEventListener('input',function(){
     const w=document.getElementById('sigLiveWrap'),t=document.getElementById('sigLiveText');
@@ -599,7 +586,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     document.getElementById('sigPreview').textContent=this.value||'—';
   });
 });
- 
+
 function switchTab(id){
   if(id==='report'&&currentUser?.role!=='mgr')return;
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
@@ -609,13 +596,13 @@ function switchTab(id){
   if(id==='report')renderReport();
   window.scrollTo({top:0,behavior:'smooth'});
 }
- 
+
 function pickEntry(type,el){
   selType=type;
   document.querySelectorAll('.entry-type-btn').forEach(b=>b.classList.remove('selected'));
   el.classList.add('selected');
 }
- 
+
 function submitEntry(){
   const name=document.getElementById('f-name').value.trim();
   if(!name){toast('⚠️ اسم الموظف مفقود','error');return;}
@@ -627,7 +614,7 @@ function submitEntry(){
   entries.push({id:Date.now(),name,date,loc,empid:EMPLOYEES[name]||'',mission:document.getElementById('f-mission').value,depart:document.getElementById('f-depart').value,duration:document.getElementById('f-duration').value,returnTime:document.getElementById('f-return').value,reason:document.getElementById('f-reason').value.trim(),entryType:selType,empSig:document.getElementById('f-emp-sig').value.trim()||name,sigDate:document.getElementById('f-sig-date').value,status:'pending',approvedBy:'',approvedDate:'',submittedAt:new Date().toISOString()});
   save();rebuildMonths();renderLog();clearForm();toast('✅ تم حفظ المهمة!','success');switchTab('log');
 }
- 
+
 function clearForm(){
   document.getElementById('f-location').value='';document.getElementById('f-reason').value='';
   document.getElementById('f-emp-sig').value=currentUser?.role==='emp'?currentUser?.name||'':'';
@@ -638,7 +625,7 @@ function clearForm(){
   document.getElementById('f-date').value=today;document.getElementById('f-sig-date').value=today;
   selType='';document.querySelectorAll('.entry-type-btn').forEach(b=>b.classList.remove('selected'));
 }
- 
+
 function renderLog(){
   const fm=document.getElementById('filterMonth').value;
   const fs=currentUser?.role==='mgr'?document.getElementById('filterStatus').value:'';
@@ -681,7 +668,7 @@ function renderLog(){
       </div>
     </div>`).join('');
 }
- 
+
 function approveOne(id){
   if(!mgrInfo.sig){openManagerModal();toast('ℹ️ أدخل توقيع المدير أولاً','info');return;}
   const e=entries.find(x=>x.id===id);if(!e)return;
@@ -699,7 +686,7 @@ function delEntry(id){
   if(!confirm('هل تريد حذف هذه المهمة؟'))return;
   entries=entries.filter(e=>e.id!==id);save();rebuildMonths();renderLog();toast('🗑️ تم الحذف','info');
 }
- 
+
 function shareEntryWA(id){
   const e=entries.find(x=>x.id===id);if(!e)return;
   const EL={in:'بصمة دخول',out:'بصمة خروج',both:'دخول وخروج'};
@@ -715,7 +702,7 @@ function shareWhatsApp(){
   msg+='\n━━━━━━━━━━━━━━\n_تم الإرسال من نظام سجل المهام_';
   window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
 }
- 
+
 function openManagerModal(){document.getElementById('modal-mgr-name').value=mgrInfo.name||'';document.getElementById('modal-mgr-sig').value=mgrInfo.sig||'';document.getElementById('sigPreview').textContent=mgrInfo.sig||'—';document.getElementById('managerModal').classList.add('open');}
 function closeModal(){document.getElementById('managerModal').classList.remove('open');}
 function saveManagerSig(){
@@ -726,13 +713,13 @@ function saveManagerSig(){
   updateMgrDisplay();closeModal();toast('✅ تم حفظ التوقيع','success');
 }
 document.getElementById('managerModal').addEventListener('click',e=>{if(e.target===document.getElementById('managerModal'))closeModal();});
- 
+
 function updateMgrDisplay(){
   document.getElementById('mgr-sig-display').textContent=mgrInfo.sig||'—';
   document.getElementById('mgr-name-display').textContent=mgrInfo.name||'—';
   document.getElementById('mgr-date-display').textContent=fmt(new Date().toISOString().split('T')[0]);
 }
- 
+
 function renderReport(){
   const month=document.getElementById('reportMonth')?.value||'';
   const filtered=entries.filter(e=>!month||e.date.startsWith(month)).sort((a,b)=>new Date(a.date)-new Date(b.date));
@@ -748,7 +735,7 @@ function renderReport(){
   if(!filtered.length){tbody.innerHTML='<tr><td colspan="12" style="text-align:center;color:#7a8fa6;padding:24px">لا توجد مهام لهذه الفترة</td></tr>';return;}
   tbody.innerHTML=filtered.map((e,i)=>'<tr><td style="font-weight:700">'+(i+1)+'</td><td><strong>'+e.name+'</strong></td><td>'+e.empid+'</td><td style="white-space:nowrap">'+fmt(e.date)+'</td><td>'+e.loc+'</td><td>'+(e.mission||'—')+'</td><td>'+(EL[e.entryType]||'—')+'</td><td>'+(e.depart||'—')+'</td><td>'+(e.returnTime||'—')+'</td><td style="font-size:10px;max-width:90px">'+(e.reason||'—')+'</td><td style="font-size:13px;font-weight:700">'+(e.empSig||e.name)+'</td><td style="color:'+(e.status==='approved'?'#1a6b3a':'#856404')+';font-weight:800;font-size:11px">'+(e.status==='approved'?'✅ معتمد':'⏳ انتظار')+'</td></tr>').join('');
 }
- 
+
 function getMonthsList(){
   const s=new Set();const n=new Date();s.add(n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0'));
   entries.forEach(e=>{if(e.date){const d=new Date(e.date);s.add(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'));}});
@@ -766,7 +753,7 @@ function rebuildMonths(){
   while(fm.options.length>1)fm.remove(1);if(rm)while(rm.options.length)rm.remove(0);
   buildMonthOptions();if(fv)fm.value=fv;if(rv&&rm)rm.value=rv;
 }
- 
+
 function save(){localStorage.setItem('jari_duty',JSON.stringify(entries));}
 function fmt(d){if(!d)return'—';return new Date(d+'T00:00:00').toLocaleDateString('ar-KW',{day:'2-digit',month:'short',year:'numeric'});}
 function toast(msg,type='success'){
