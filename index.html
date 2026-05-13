@@ -355,7 +355,15 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
           </div>
           <div class="field form-full">
             <label>الموقع / الجهة المقصودة</label>
-            <input type="text" id="f-location" placeholder="مثال: مدرسة كامبردج — حولي"/>
+            <select id="f-location" onchange="handleLocationSelect(this.value)" style="width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'Tajawal',sans-serif;font-size:15px;color:var(--ink);background:var(--surface);-webkit-appearance:none;appearance:none;background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2712%27 height=%278%27 viewBox=%270 0 12 8%27%3E%3Cpath d=%27M1 1l5 5 5-5%27 stroke=%27%237a8fa6%27 stroke-width=%271.5%27 fill=%27none%27 stroke-linecap=%27round%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:left 12px center;padding-left:36px;">
+              <option value="">— اختر الجهة —</option>
+              <option value="كامبردج - حولي">كامبردج - حولي</option>
+              <option value="كامبردج - المنقف">كامبردج - المنقف</option>
+              <option value="NAS">NAS</option>
+              <option value="مدرسة أجيال">مدرسة أجيال</option>
+              <option value="__other__">أخرى</option>
+            </select>
+            <input type="text" id="f-location-other" placeholder="اكتب اسم الجهة..." style="display:none;width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'Tajawal',sans-serif;font-size:15px;color:var(--ink);background:var(--surface);margin-top:8px;"/>
           </div>
           <div class="field form-full">
             <label>سبب المهمة أو عدم الحضور</label>
@@ -406,8 +414,8 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
         </div>
       </div>
       <div class="form-actions">
-        <button class="btn btn-blue" onclick="submitEntry()" style="width:100%">✅ حفظ وإرسال المهمة</button>
-        <button class="btn btn-outline" onclick="clearForm()" style="width:100%">🔄 مسح النموذج</button>
+        <input type="button" onclick="submitEntry()" value="✅ حفظ وإرسال المهمة" style="width:100%;padding:16px;background:#2e6bc4;color:#fff;border:none;border-radius:10px;font-family:'Tajawal',sans-serif;font-size:16px;font-weight:800;cursor:pointer;-webkit-appearance:none;appearance:none;margin-bottom:10px;">
+        <input type="button" onclick="clearForm()" value="🔄 مسح النموذج" style="width:100%;padding:16px;background:none;color:#7a8fa6;border:1.5px solid #dde4ee;border-radius:10px;font-family:'Tajawal',sans-serif;font-size:16px;font-weight:700;cursor:pointer;-webkit-appearance:none;appearance:none;">
       </div>
     </div>
 
@@ -499,8 +507,8 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
     </div>
     <div class="sig-preview-box"><div class="sig-preview-text" id="sigPreview">—</div></div>
     <div class="modal-actions">
-      <button class="btn btn-green" onclick="saveManagerSig()" style="width:100%">✅ حفظ التوقيع</button>
-      <button class="btn btn-outline" onclick="closeModal()" style="width:100%">إلغاء</button>
+      <input type="button" onclick="saveManagerSig()" value="✅ حفظ التوقيع" style="width:100%;padding:15px;background:#1a6b3a;color:#fff;border:none;border-radius:10px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:800;cursor:pointer;-webkit-appearance:none;appearance:none;margin-bottom:10px;">
+      <input type="button" onclick="closeModal()" value="إلغاء" style="width:100%;padding:15px;background:none;color:#7a8fa6;border:1.5px solid #dde4ee;border-radius:10px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:700;cursor:pointer;-webkit-appearance:none;appearance:none;">
     </div>
   </div>
 </div>
@@ -517,7 +525,17 @@ let currentUser = null;
 
 function toggleMgrLogin(){ /* no longer used */ }
 
-function handleNameSelect(val){
+function handleLocationSelect(val){
+  const other = document.getElementById('f-location-other');
+  other.style.display = val === '__other__' ? 'block' : 'none';
+  if(val !== '__other__') other.value = '';
+}
+
+function getLocation(){
+  const sel = document.getElementById('f-location').value;
+  if(sel === '__other__') return document.getElementById('f-location-other').value.trim();
+  return sel;
+}
   document.getElementById('loginErr').style.display='none';
   if(val==='__mgr__'){
     document.getElementById('mgrPassWrap').style.display='block';
@@ -602,7 +620,7 @@ function submitEntry(){
   if(!name){toast('⚠️ اسم الموظف مفقود','error');return;}
   const date=document.getElementById('f-date').value;
   if(!date){toast('⚠️ حدد التاريخ','error');return;}
-  const loc=document.getElementById('f-location').value.trim();
+  const loc=getLocation();
   if(!loc){toast('⚠️ أدخل الموقع / الجهة','error');return;}
   if(!selType){toast('⚠️ اختر نوع البصمة','error');return;}
   entries.push({id:Date.now(),name,date,loc,empid:EMPLOYEES[name]||'',mission:document.getElementById('f-mission').value,depart:document.getElementById('f-depart').value,duration:document.getElementById('f-duration').value,returnTime:document.getElementById('f-return').value,reason:document.getElementById('f-reason').value.trim(),entryType:selType,empSig:document.getElementById('f-emp-sig').value.trim()||name,sigDate:document.getElementById('f-sig-date').value,status:'pending',approvedBy:'',approvedDate:'',submittedAt:new Date().toISOString()});
@@ -610,7 +628,9 @@ function submitEntry(){
 }
 
 function clearForm(){
-  document.getElementById('f-location').value='';document.getElementById('f-reason').value='';
+  document.getElementById('f-location').selectedIndex=0;
+  document.getElementById('f-location-other').value='';
+  document.getElementById('f-location-other').style.display='none';document.getElementById('f-reason').value='';
   document.getElementById('f-emp-sig').value=currentUser?.role==='emp'?currentUser?.name||'':'';
   document.getElementById('f-mission').selectedIndex=0;
   document.getElementById('f-depart').value='';document.getElementById('f-return').value='';
@@ -656,9 +676,9 @@ function renderLog(){
       </div>
       ${e.reason?'<div class="ec-reason">💬 '+e.reason+'</div>':''}
       <div class="ec-actions">
-        ${isMgr&&e.status==='pending'?'<button class="btn btn-green" onclick="approveOne('+e.id+')">✅ اعتماد</button>':e.status==='approved'?'<span style="font-size:12px;color:var(--muted)">✅ اعتمد: '+e.approvedBy+'</span>':''}
-        <button class="btn btn-wa" onclick="shareEntryWA(${e.id})">💬</button>
-        ${isMgr?'<button class="btn btn-red-outline" onclick="delEntry('+e.id+')" style="padding:9px 12px">🗑️</button>':''}
+        ${isMgr&&e.status==='pending'?'<input type="button" onclick="approveOne('+e.id+')" value="✅ اعتماد" style="padding:10px 16px;background:#1a6b3a;color:#fff;border:none;border-radius:8px;font-family:Tajawal,sans-serif;font-size:13px;font-weight:700;cursor:pointer;-webkit-appearance:none;appearance:none;">':e.status==='approved'?'<span style="font-size:12px;color:var(--muted)">✅ اعتمد: '+e.approvedBy+'</span>':''}
+        <input type="button" onclick="shareEntryWA(${e.id})" value="💬" style="padding:10px 14px;background:#25D366;color:#fff;border:none;border-radius:8px;font-family:Tajawal,sans-serif;font-size:13px;font-weight:700;cursor:pointer;-webkit-appearance:none;appearance:none;">
+        ${isMgr?'<input type="button" onclick="delEntry('+e.id+')" value="🗑️" style="padding:10px 12px;background:none;color:#c0392b;border:1.5px solid rgba(192,57,43,.3);border-radius:8px;font-family:Tajawal,sans-serif;font-size:13px;cursor:pointer;-webkit-appearance:none;appearance:none;">':''}
       </div>
     </div>`).join('');
 }
