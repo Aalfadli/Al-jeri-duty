@@ -249,15 +249,11 @@ body{font-family:'Tajawal',sans-serif;background:var(--surface);color:var(--ink)
 
   <div style="background:#fff;border-radius:18px;padding:24px;width:100%;max-width:360px;">
 
-    <div style="font-size:13px;font-weight:700;color:#1e2d3d;margin-bottom:8px;">اختر اسمك</div>
-    <select id="login-name" onchange="handleNameSelect(this.value)" style="width:100%;padding:14px;border:2px solid #dde4ee;border-radius:10px;font-family:Tajawal,sans-serif;font-size:16px;color:#0f1923;background:#f0f4fa;direction:rtl;-webkit-appearance:none;appearance:none;display:block;margin-bottom:16px;">
-      <option value="">— اختر اسمك للدخول —</option>
-      <option value="عبدالله الحاج">عبدالله الحاج</option>
-      <option value="نور أبو علول">نور أبو علول</option>
-      <option value="رغد نداف">رغد نداف</option>
-      <option value="ابراهيم عوده">ابراهيم عوده</option>
-      <option value="__mgr__">عبدالله الفضلي (مدير)</option>
-    </select>
+    <div style="font-size:13px;font-weight:700;color:#1e2d3d;margin-bottom:12px;">اختر اسمك للدخول</div>
+    <input type="button" value="عبدالله الحاج" onclick="doLoginEmp('عبدالله الحاج')" style="width:100%;padding:15px;margin-bottom:10px;background:#f0f4fa;color:#0f1923;border:2px solid #dde4ee;border-radius:10px;font-family:'Tajawal',sans-serif;font-size:16px;font-weight:700;cursor:pointer;-webkit-appearance:none;appearance:none;display:block;">
+    <input type="button" value="نور أبو علول" onclick="doLoginEmp('نور أبو علول')" style="width:100%;padding:15px;margin-bottom:10px;background:#f0f4fa;color:#0f1923;border:2px solid #dde4ee;border-radius:10px;font-family:'Tajawal',sans-serif;font-size:16px;font-weight:700;cursor:pointer;-webkit-appearance:none;appearance:none;display:block;">
+    <input type="button" value="رغد نداف" onclick="doLoginEmp('رغد نداف')" style="width:100%;padding:15px;margin-bottom:10px;background:#f0f4fa;color:#0f1923;border:2px solid #dde4ee;border-radius:10px;font-family:'Tajawal',sans-serif;font-size:16px;font-weight:700;cursor:pointer;-webkit-appearance:none;appearance:none;display:block;">
+    <input type="button" value="ابراهيم عوده" onclick="doLoginEmp('ابراهيم عوده')" style="width:100%;padding:15px;margin-bottom:10px;background:#f0f4fa;color:#0f1923;border:2px solid #dde4ee;border-radius:10px;font-family:'Tajawal',sans-serif;font-size:16px;font-weight:700;cursor:pointer;-webkit-appearance:none;appearance:none;display:block;">
 
     <div id="loginErr" style="display:none;background:#fce8e6;color:#c0392b;border-radius:8px;padding:10px;font-size:13px;font-weight:600;text-align:center;margin-bottom:10px;">كلمة مرور غير صحيحة</div>
 
